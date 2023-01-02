@@ -1,0 +1,1 @@
+export { EmailPhoneRegisterTabRoute } from './EmailPhoneRegisterTabRoute';
