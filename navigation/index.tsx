@@ -22,6 +22,8 @@ import {
     ChatScreen,
     LoginScreen,
     GetLocationScreen,
+    CreatePassword,
+    AddBirthDateScreen,
 } from '../screens';
 import { RegisterScreen } from '../screens/RegisterScreen';
 
@@ -60,6 +62,8 @@ function RootNavigator() {
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="GetLocation" component={GetLocationScreen} />
             <Stack.Screen name="LoginViaEmail" component={ModalScreen} />
+            <Stack.Screen name="CreatePassword" component={CreatePassword} />
+            <Stack.Screen name="AddBirthDateScreen" component={AddBirthDateScreen} />
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen name="Modal" component={ModalScreen} />
             </Stack.Group>

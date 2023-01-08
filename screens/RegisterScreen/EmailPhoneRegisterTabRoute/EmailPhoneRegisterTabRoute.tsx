@@ -1,55 +1,39 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { RegisterScreenWrapperStyled } from '../styles';
 import { CheckBox, Divider, MainButton, MainInput, Wrapper } from '../../../components';
-import PhoneInput, { isValidNumber, PhoneInputProps } from 'react-native-phone-number-input';
-import {
-    containerStyle,
-    countryPickerButtonStyle,
-    TermsAgreeText,
-    textContainerStyle,
-    textInputStyle,
-} from './styles';
-import { validateEmail } from '../../../helpers';
+import PhoneInput from 'react-native-phone-number-input';
+import { TermsAgreeText } from './styles';
 import { useRegisterContext } from '../../../context';
+import firebase from 'firebase/compat';
+import { validateEmail } from '../../../helpers';
+import { tNoop } from '../../../types';
 
 interface IProps {
-    isPhone: boolean;
+    onEmailSendHandler: () => void;
 }
 
-export const EmailPhoneRegisterTabRoute: FC<IProps> = ({ isPhone }) => {
+export const EmailPhoneRegisterTabRoute: FC<IProps> = ({ onEmailSendHandler }) => {
     const phoneInput = useRef<PhoneInput | null>(null);
-    const [number, setPhoneNumber] = useState('');
     const { registerData, setRegisterData } = useRegisterContext();
+
+    const isDisabled = (isChecked: boolean, validEmail: boolean): boolean => {
+        return !(isChecked && validEmail);
+    };
+
     return (
         <RegisterScreenWrapperStyled>
             <Wrapper>
-                {isPhone ? (
-                    <PhoneInput
-                        ref={phoneInput}
-                        defaultCode={registerData.country?.cca2 as PhoneInputProps['defaultCode']}
-                        layout="first"
-                        withDarkTheme
-                        withShadow
-                        autoFocus
-                        containerStyle={containerStyle}
-                        textContainerStyle={textContainerStyle}
-                        textInputStyle={textInputStyle}
-                        countryPickerButtonStyle={countryPickerButtonStyle}
-                        onChangeFormattedText={text => setPhoneNumber(text)}
-                    />
-                ) : (
-                    <MainInput
-                        value={registerData.email}
-                        onChangeText={text =>
-                            setRegisterData(prevState => ({
-                                ...prevState,
-                                email: text,
-                            }))
-                        }
-                        placeholder={'Enter Your Email'}
-                        textContentType={'emailAddress'}
-                    />
-                )}
+                <MainInput
+                    value={registerData.email}
+                    onChangeText={text =>
+                        setRegisterData(prevState => ({
+                            ...prevState,
+                            email: text,
+                        }))
+                    }
+                    placeholder={'Enter Your Email'}
+                    textContentType={'emailAddress'}
+                />
                 <Divider size={24} />
                 <CheckBox
                     isChecked={registerData.isChecked}
@@ -75,12 +59,8 @@ export const EmailPhoneRegisterTabRoute: FC<IProps> = ({ isPhone }) => {
                 />
                 <Divider size={32} />
                 <MainButton
-                    disabled={false}
-                    onPress={() => {
-                        const res = isValidNumber(number, 'AM');
-                        alert(res);
-                        alert(number);
-                    }}
+                    disabled={isDisabled(registerData.isChecked, validateEmail(registerData.email))}
+                    onPress={() => onEmailSendHandler()}
                 >
                     Continue
                 </MainButton>
