@@ -11,6 +11,7 @@ export const RegisterScreen: FC<IProps> = ({ navigation }) => {
         navigation.setOptions({
             title: 'Registration',
             headerBackTitleVisible: false,
+            headerTitleAlign: 'center',
             headerLeft: () => (
                 <TouchableOpacity style={{ marginLeft: 10 }} onPress={navigation.goBack}>
                     <AntDesign name={'arrowleft'} size={24} color={'black'} />

@@ -7,7 +7,7 @@ export const GetLocationContainer = styled(View)`
 `;
 
 export const LocationIconContainer = styled(View)`
-    border-radius: 100%;
+    border-radius: 800px;
     height: 110px;
     width: 110px;
     align-items: center;
