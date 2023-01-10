@@ -6,3 +6,4 @@ export * from './Inputs';
 export * from './Divider';
 export * from './Checkbox';
 export * from './Typography';
+export * from './HeaderSection';

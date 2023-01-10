@@ -1,6 +1,5 @@
 import { FC, useLayoutEffect, useRef, useState } from 'react';
-import { Typography, Wrapper, Divider, MainButton } from '../../components';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { Typography, Wrapper, Divider, MainButton, HeaderSection } from '../../components';
 import { useRegisterContext } from '../../context';
 import { Platform, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
@@ -46,14 +45,11 @@ export const AddBirthDateScreen: FC<IProps> = ({ navigation }) => {
 
     return (
         <Wrapper>
-            <Divider size={60} />
-            <Typography textType={'h1'} align={'center'}>
-                What’s your Birthday?
-            </Typography>
-            <Divider size={8} />
-            <Typography textType={'p'} align={'center'}>
-                We don’t share this information with other users.
-            </Typography>
+            <Divider size={40} />
+            <HeaderSection
+                title={'What’s your Birthday?'}
+                subTitle={'We don’t share this information with other users.'}
+            />
             <Divider size={30} />
             <Typography textType={'p'} align={'center'}>
                 {registerData.birthDate}

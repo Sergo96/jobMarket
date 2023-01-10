@@ -1,6 +1,13 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { RegisterScreenWrapperStyled } from '../styles';
-import { CheckBox, Divider, MainButton, MainInput, Wrapper } from '../../../components';
+import {
+    CheckBox,
+    Divider,
+    HeaderSection,
+    MainButton,
+    MainInput,
+    Wrapper,
+} from '../../../components';
 import PhoneInput from 'react-native-phone-number-input';
 import { TermsAgreeText } from './styles';
 import { useRegisterContext } from '../../../context';
@@ -23,6 +30,11 @@ export const EmailPhoneRegisterTabRoute: FC<IProps> = ({ onEmailSendHandler }) =
     return (
         <RegisterScreenWrapperStyled>
             <Wrapper>
+                <HeaderSection
+                    title={'Enter Your Email'}
+                    subTitle={'For registration we need email'}
+                />
+                <Divider size={24} />
                 <MainInput
                     value={registerData.email}
                     onChangeText={text =>
