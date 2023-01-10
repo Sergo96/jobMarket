@@ -27,10 +27,9 @@ interface IProps extends RootStackScreenProps<'CreatePassword'> {}
 
 export const CreatePassword: FC<IProps> = ({ navigation }) => {
     const { registerData, setRegisterData } = useRegisterContext();
-    const { password, passwordConfirmation, fullName } = registerData;
+    const { password, passwordConfirmation } = registerData;
     const passwordValidated = passwordValidator(password, passwordConfirmation);
-    const disabledButton =
-        Object.values(passwordValidated).every(item => item) && !!fullName.length;
+    const disabledButton = Object.values(passwordValidated).every(item => item);
 
     useLayoutEffect(() => {
         navigation.setOptions({

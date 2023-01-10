@@ -1,16 +1,24 @@
-import { FC, useLayoutEffect } from 'react';
-import { Divider, MainButton, MainInput, Typography, Wrapper } from '../../components';
-import { TouchableOpacity } from 'react-native';
+import { FC, useLayoutEffect, useState } from 'react';
+import {
+    Divider,
+    HeaderSection,
+    MainButton,
+    MainInput,
+    Typography,
+    Wrapper,
+} from '../../components';
+import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
 import { useRegisterContext } from '../../context';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile, UserCredential } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 interface IProps extends RootStackScreenProps<'AddBirthDateScreen'> {}
 
 export const NicknameScreen: FC<IProps> = ({ navigation }) => {
     const { registerData, setRegisterData } = useRegisterContext();
+    const [loading, setLoading] = useState<boolean>(false);
     const {
         nickname,
         email,
@@ -36,40 +44,64 @@ export const NicknameScreen: FC<IProps> = ({ navigation }) => {
     }, [navigation]);
 
     const onRegisterPress = () => {
+        setLoading(true);
         createUserWithEmailAndPassword(auth, email, passwordConfirmation)
-            .then(authUser => {
+            .then((authUser: UserCredential) => {
                 updateProfile(authUser.user, {
                     displayName: fullName,
-                });
+                }).then(res => console.log({ res }));
+                const token = authUser.user.getIdToken();
+                const obj = authUser.user.toJSON();
+                token.then(res => console.log({ res }));
                 navigation.replace('Root');
             })
-            .catch(error => alert(error));
+            .catch(error => alert(error))
+            .finally(() => setLoading(false));
     };
     return (
-        <Wrapper>
-            <Divider size={60} />
-            <Typography textType={'h1'} align={'center'}>
-                What is your Nickname and Full Name?
-            </Typography>
-            <Divider size={8} />
-            <Typography textType={'p'} align={'center'}>
-                We don’t share this information with other users.
-            </Typography>
-            <Divider size={30} />
-            <MainInput
-                value={nickname}
-                onChangeText={text =>
-                    setRegisterData(prevState => ({
-                        ...prevState,
-                        nickname: text,
-                    }))
-                }
-                placeholder={'Your Nickname'}
-            />
-            <Divider size={30} />
-            <MainButton disabled={!nickname.length} onPress={onRegisterPress}>
-                Register
-            </MainButton>
-        </Wrapper>
+        <SafeAreaView>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={90}
+                style={{ padding: 30 }}
+            >
+                <Divider size={30} />
+                <HeaderSection
+                    title={'What is your Nickname and Full Name?'}
+                    subTitle={'We don’t share this information with other users.\n'}
+                />
+                <Divider size={20} />
+                <MainInput
+                    value={fullName}
+                    onChangeText={text =>
+                        setRegisterData(prevState => ({
+                            ...prevState,
+                            fullName: text,
+                        }))
+                    }
+                    placeholder={'Enter your full name'}
+                />
+                <Divider size={15} />
+                <MainInput
+                    value={nickname}
+                    onChangeText={text =>
+                        setRegisterData(prevState => ({
+                            ...prevState,
+                            nickname: text,
+                        }))
+                    }
+                    placeholder={'Your Nickname'}
+                />
+                <Divider size={30} />
+                <MainButton
+                    loading={loading}
+                    disabled={!nickname.length || !fullName.length || loading}
+                    onPress={onRegisterPress}
+                >
+                    Register
+                </MainButton>
+                <View style={{ height: 100 }} />
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 };
