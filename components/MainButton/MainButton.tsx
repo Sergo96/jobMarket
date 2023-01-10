@@ -1,10 +1,17 @@
-import React, { FC } from 'react';
-import { TouchableOpacity, Text, Touchable, TouchableOpacityProps } from 'react-native';
+import React, { FC, ReactNode } from 'react';
+import {
+    TouchableOpacity,
+    Text,
+    Touchable,
+    TouchableOpacityProps,
+    ActivityIndicator,
+} from 'react-native';
 import styled from 'styled-components';
 
 interface IProps extends TouchableOpacityProps {
-    children: string;
+    children: string | ReactNode;
     background?: string;
+    loading?: boolean;
 }
 
 const StyledButton = styled(TouchableOpacity)<{ background?: string; disabled?: boolean }>`
@@ -32,8 +39,8 @@ const StyledText = styled(Text)<{ disabled?: boolean }>`
     }};
 `;
 
-export const MainButton: FC<IProps> = ({ children, background, disabled, ...props }) => (
+export const MainButton: FC<IProps> = ({ children, background, disabled, loading, ...props }) => (
     <StyledButton onPress={() => {}} background={background} disabled={disabled} {...props}>
-        <StyledText disabled={disabled}>{children}</StyledText>
+        {loading ? <ActivityIndicator /> : <StyledText disabled={disabled}>{children}</StyledText>}
     </StyledButton>
 );

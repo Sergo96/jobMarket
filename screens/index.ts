@@ -5,3 +5,4 @@ export * from './LoginScreen';
 export * from './GetLocationScreen';
 export * from './CreatePassword';
 export * from './AddBirthDateScreen';
+export * from './NicknameScreen';

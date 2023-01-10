@@ -1,5 +1,14 @@
 import { FC, useLayoutEffect, useState } from 'react';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import {
+    Keyboard,
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
+} from 'react-native';
 import {
     PasswordInput,
     Wrapper,
@@ -25,7 +34,7 @@ export const CreatePassword: FC<IProps> = ({ navigation }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: 'Create Name and Password',
+            title: 'Create Password',
             headerBackTitleVisible: false,
             headerTitleAlign: 'center',
             headerLeft: () => (
@@ -42,54 +51,52 @@ export const CreatePassword: FC<IProps> = ({ navigation }) => {
 
     return (
         <SafeAreaView>
-            <Wrapper>
-                <Typography textType={'h1'} align={'center'}>
-                    Create Name and Password
-                </Typography>
-                <Divider size={17} />
-                <MainInput
-                    placeholder={'Your Name and Surname'}
-                    value={fullName}
-                    onChangeText={text =>
-                        setRegisterData(prevState => ({
-                            ...prevState,
-                            fullName: text,
-                        }))
-                    }
-                />
-                <Divider size={17} />
-                <PasswordInput
-                    value={password}
-                    onChangeText={text =>
-                        setRegisterData(prevState => ({
-                            ...prevState,
-                            password: text,
-                        }))
-                    }
-                    placeholder={'Password'}
-                    show={true}
-                    onTextDelete={() => {}}
-                />
-                <Divider size={17} />
-                <PasswordInput
-                    placeholder={'Repeat Password'}
-                    show={true}
-                    value={passwordConfirmation}
-                    onChangeText={text =>
-                        setRegisterData(prevState => ({
-                            ...prevState,
-                            passwordConfirmation: text,
-                        }))
-                    }
-                    onTextDelete={() => {}}
-                />
-                <Divider size={17} />
-                <PasswordRequirements {...passwordValidated} />
-                <Divider size={17} />
-                <MainButton onPress={onPressHandler} disabled={!disabledButton}>
-                    Continue
-                </MainButton>
-            </Wrapper>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={90}
+                style={{ padding: 30 }}
+            >
+                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                    <View>
+                        <Typography textType={'h1'} align={'center'}>
+                            Create Password
+                        </Typography>
+                        <Divider size={17} />
+                        <PasswordInput
+                            value={password}
+                            onChangeText={text =>
+                                setRegisterData(prevState => ({
+                                    ...prevState,
+                                    password: text,
+                                }))
+                            }
+                            placeholder={'Password'}
+                            show={true}
+                            onTextDelete={() => {}}
+                        />
+                        <Divider size={17} />
+                        <PasswordInput
+                            placeholder={'Repeat Password'}
+                            show={true}
+                            value={passwordConfirmation}
+                            onChangeText={text =>
+                                setRegisterData(prevState => ({
+                                    ...prevState,
+                                    passwordConfirmation: text,
+                                }))
+                            }
+                            onTextDelete={() => {}}
+                        />
+                        <Divider size={17} />
+                        <PasswordRequirements {...passwordValidated} />
+                        <Divider size={17} />
+                        <MainButton onPress={onPressHandler} disabled={!disabledButton}>
+                            Continue
+                        </MainButton>
+                        <View style={{ height: 100 }} />
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
