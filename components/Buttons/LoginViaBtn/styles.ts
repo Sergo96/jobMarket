@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Button } from 'react-native';
 
-export const LoginViaStyled = styled(View)`
+export const LoginViaStyled = styled(TouchableOpacity)`
     display: flex;
     flex-direction: row;
     align-items: center;
