@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { Pressable, Text, TouchableOpacity } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
@@ -7,6 +7,7 @@ import { MainButton, Wrapper, Divider, MainInput } from '../../components';
 import * as Location from 'expo-location';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
 import { tCountry, useRegisterContext } from '../../context';
+import { useIsFirstRender, useUpdateEffect } from '../../hooks';
 
 interface IProps extends RootStackScreenProps<'GetLocation'> {}
 
@@ -15,6 +16,8 @@ export const GetLocationScreen: FC<IProps> = ({ navigation }) => {
     const [country, setCountry] = useState<Country | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const { registerData, setRegisterData } = useRegisterContext();
+    const isFirst = useIsFirstRender();
+
     const onSelect = (country: Country) => {
         setCountryCode(country.cca2);
         setCountry(country);
@@ -60,6 +63,20 @@ export const GetLocationScreen: FC<IProps> = ({ navigation }) => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (isFirst && country === null) {
+            onSelect({
+                callingCode: ['93'],
+                cca2: 'AF',
+                currency: ['AFN'],
+                flag: 'flag-af',
+                name: 'Afghanistan',
+                region: 'Asia',
+                subregion: 'Southern Asia',
+            });
+        }
+    }, [isFirst, country?.name]);
 
     return (
         <Wrapper>
