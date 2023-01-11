@@ -13,9 +13,10 @@ interface IProps extends TextInputProps {
 export const PasswordInput: FC<IProps> = ({ show, onTextDelete, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
     const iconName = showPassword ? 'eye-outline' : 'eye-off-sharp';
+    const { isError } = props;
 
     return (
-        <StyledMainPasswordInput>
+        <StyledMainPasswordInput isError={isError}>
             <InnerInput {...props} secureTextEntry={!showPassword} />
             <Ionicons name={'close-sharp'} size={24} onPress={() => onTextDelete()} />
             <Ionicons

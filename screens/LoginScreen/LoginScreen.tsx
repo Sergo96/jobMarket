@@ -1,21 +1,30 @@
-import { FC, useLayoutEffect } from 'react';
-import { LoginViaBtn, Wrapper } from '../../components';
+import { FC, useEffect, useLayoutEffect } from 'react';
+import { LoginViaBtn, RegisterFooter, Divider } from '../../components';
 import { signInViaButtons } from './data';
 import { RootStackScreenProps } from '../../types';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { FooterBoldText, FooterRegisterStyled, FooterStyled, LoginScreenContainer } from './styles';
-import { AntDesign } from '@expo/vector-icons';
+import { auth } from '../../firebase';
 
 interface IProps extends RootStackScreenProps<'Login'> {}
 
 export const LoginScreen: FC<IProps> = ({ navigation }) => {
     const onLoginButtonPress = (title: string) => {
+        console.log('click');
         if (title === 'LoginViaEmail') navigation.navigate('LoginViaEmail');
     };
 
     const onRegisterPress = () => {
         navigation.navigate('GetLocation');
     };
+
+    useEffect(() => {
+        return auth.onAuthStateChanged(authUser => {
+            if (authUser) {
+                navigation.replace('Root');
+            }
+        });
+    }, []);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -36,14 +45,8 @@ export const LoginScreen: FC<IProps> = ({ navigation }) => {
                     </LoginViaBtn>
                 ))}
             </LoginScreenContainer>
-            <FooterStyled>
-                <FooterRegisterStyled>
-                    <Text>
-                        Don’t have an account?{' '}
-                        <FooterBoldText onPress={onRegisterPress}>Register</FooterBoldText>{' '}
-                    </Text>
-                </FooterRegisterStyled>
-            </FooterStyled>
+            <RegisterFooter onRegisterPress={onRegisterPress} />
+            <Divider />
         </View>
     );
 };

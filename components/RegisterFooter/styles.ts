@@ -1,18 +1,11 @@
 import styled from 'styled-components';
-import { View, Text } from 'react-native';
-
-export const LoginScreenContainer = styled(View)`
-    padding: 30px;
-    background-color: ${({ theme: { elements } }) => elements.WHITE_PRIMARY};
-    flex: 1;
-`;
+import { Text, View } from 'react-native';
 
 export const FooterStyled = styled(View)`
     flex-direction: row;
     align-items: center;
     width: 100%;
     justify-content: center;
-    height: 100%;
     background-color: ${({ theme: { elements } }) => elements.WHITE_PRIMARY};
 `;
 

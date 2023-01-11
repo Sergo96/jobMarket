@@ -4,6 +4,8 @@ import { RootTabScreenProps } from '../../types';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const getData = async () => {
     try {
@@ -21,13 +23,25 @@ export function ProfileScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
     const [token, setToken] = useState<string>('');
     const [objec, setObjec] = useState<any>();
 
+    const signOutUser = () => {
+        signOut(auth)
+            .then(out => {
+                // Sign-out successful.
+                console.log({ out });
+                navigation.replace('Login');
+            })
+            .catch(error => {
+                // An error happened.
+            });
+    };
+
     useEffect(() => {
         getData().then(res => setObjec(res));
     }, []);
     return (
         <Wrapper>
             <Text>token: {objec}</Text>
-            <MainButton>Click</MainButton>
+            <MainButton onPress={signOutUser}>Click</MainButton>
         </Wrapper>
     );
 }

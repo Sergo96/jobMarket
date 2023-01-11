@@ -25,6 +25,7 @@ import {
     CreatePassword,
     AddBirthDateScreen,
     NicknameScreen,
+    LoginViaEmail,
 } from '../screens';
 import { RegisterScreen } from '../screens/RegisterScreen';
 
@@ -62,7 +63,7 @@ function RootNavigator() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="GetLocation" component={GetLocationScreen} />
-            <Stack.Screen name="LoginViaEmail" component={ModalScreen} />
+            <Stack.Screen name="LoginViaEmail" component={LoginViaEmail} />
             <Stack.Screen name="CreatePassword" component={CreatePassword} />
             <Stack.Screen name="AddBirthDateScreen" component={AddBirthDateScreen} />
             <Stack.Screen name="NicknameScreen" component={NicknameScreen} />

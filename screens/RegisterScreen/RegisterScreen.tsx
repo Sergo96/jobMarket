@@ -1,9 +1,10 @@
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect } from 'react';
 import { RootStackScreenProps } from '../../types';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity, useWindowDimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { EmailPhoneRegisterTabRoute } from './EmailPhoneRegisterTabRoute';
+import { auth } from '../../firebase';
 interface IProps extends RootStackScreenProps<'RegisterScreen'> {}
 
 export const RegisterScreen: FC<IProps> = ({ navigation }) => {
@@ -19,6 +20,14 @@ export const RegisterScreen: FC<IProps> = ({ navigation }) => {
             ),
         });
     }, [navigation]);
+
+    useEffect(() => {
+        return auth.onAuthStateChanged(authUser => {
+            if (authUser) {
+                navigation.replace('Root');
+            }
+        });
+    }, []);
 
     const onEmailSendHandler = () => {
         navigation.navigate('CreatePassword');
