@@ -1,22 +1,14 @@
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useLayoutEffect } from 'react';
 import {
     Keyboard,
     KeyboardAvoidingView,
     Platform,
     SafeAreaView,
-    ScrollView,
     TouchableOpacity,
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
-import {
-    PasswordInput,
-    Wrapper,
-    Divider,
-    MainButton,
-    Typography,
-    MainInput,
-} from '../../components';
+import { PasswordInput, Divider, MainButton, Typography } from '../../components';
 import { AntDesign } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
 import { PasswordRequirements } from './PasswordRequirements';
@@ -49,13 +41,16 @@ export const CreatePassword: FC<IProps> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 keyboardVerticalOffset={90}
-                style={{ padding: 30 }}
+                style={{ padding: 30, backgroundColor: 'white' }}
             >
-                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <TouchableWithoutFeedback
+                    onPress={() => Keyboard.dismiss()}
+                    style={{ backgroundColor: 'white' }}
+                >
                     <View>
                         <Typography textType={'h1'} align={'center'}>
                             Create Password

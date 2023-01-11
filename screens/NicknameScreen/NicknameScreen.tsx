@@ -1,35 +1,20 @@
 import { FC, useLayoutEffect, useState } from 'react';
-import {
-    Divider,
-    HeaderSection,
-    MainButton,
-    MainInput,
-    Typography,
-    Wrapper,
-} from '../../components';
+import { Divider, HeaderSection, MainButton, MainInput } from '../../components';
 import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
 import { useRegisterContext } from '../../context';
 import { createUserWithEmailAndPassword, updateProfile, UserCredential } from 'firebase/auth';
 import { auth } from '../../firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface IProps extends RootStackScreenProps<'AddBirthDateScreen'> {}
+interface IProps extends RootStackScreenProps<'NicknameScreen'> {}
 
 export const NicknameScreen: FC<IProps> = ({ navigation }) => {
     const { registerData, setRegisterData } = useRegisterContext();
     const [loading, setLoading] = useState<boolean>(false);
-    const {
-        nickname,
-        email,
-        passwordConfirmation,
-        fullName,
-        birthDate,
-        isChecked,
-        country,
-        coordinates,
-        phoneNumber,
-    } = registerData;
+    const { nickname, email, passwordConfirmation, fullName } = registerData;
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: 'Nickname',
@@ -43,6 +28,23 @@ export const NicknameScreen: FC<IProps> = ({ navigation }) => {
         });
     }, [navigation]);
 
+    const storeData = async (value: any) => {
+        try {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem('@storage_Key', jsonValue);
+        } catch (e) {
+            // saving error
+        }
+    };
+
+    const storeTokenData = async (value: string) => {
+        try {
+            await AsyncStorage.setItem('@accessToken', value);
+        } catch (e) {
+            // saving error
+        }
+    };
+
     const onRegisterPress = () => {
         setLoading(true);
         createUserWithEmailAndPassword(auth, email, passwordConfirmation)
@@ -52,7 +54,8 @@ export const NicknameScreen: FC<IProps> = ({ navigation }) => {
                 }).then(res => console.log({ res }));
                 const token = authUser.user.getIdToken();
                 const obj = authUser.user.toJSON();
-                token.then(res => console.log({ res }));
+                storeData(obj).then(r => console.log({ r }));
+                token.then(res => storeTokenData(res));
                 navigation.replace('Root');
             })
             .catch(error => alert(error))
