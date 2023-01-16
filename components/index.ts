@@ -8,3 +8,4 @@ export * from './Checkbox';
 export * from './Typography';
 export * from './HeaderSection';
 export * from './RegisterFooter';
+export * from './RoundGrayContainer';

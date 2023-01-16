@@ -13,7 +13,7 @@ import { propsHandler } from './propsHandler';
 
 interface IProps {
     textType: tTypographyType;
-    children: string;
+    children: string | ReactNode;
     align?: string;
     size?: tSize;
     weight?: number;

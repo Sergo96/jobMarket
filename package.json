@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "^6.1.0",
     "@rneui/themed": "^4.0.0-rc.7",
     "@types/styled-components-react-native": "^5.2.0",
+    "axios": "^1.2.2",
     "expo": "~47.0.8",
     "expo-asset": "~8.6.2",
     "expo-constants": "~14.0.2",

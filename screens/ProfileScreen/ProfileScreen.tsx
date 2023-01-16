@@ -23,17 +23,27 @@ export function ProfileScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
     const [token, setToken] = useState<string>('');
     const [objec, setObjec] = useState<any>();
 
+    let user = auth.currentUser;
+    console.log({ user });
+
     const signOutUser = () => {
         signOut(auth)
             .then(out => {
                 // Sign-out successful.
-                console.log({ out });
                 navigation.replace('Login');
             })
             .catch(error => {
                 // An error happened.
             });
     };
+
+    // useEffect(() => {
+    //     if (user?.emailVerified !== null) {
+    //         if (user?.emailVerified === false) {
+    //             navigation.replace('EmailVerification');
+    //         }
+    //     }
+    // }, [user?.emailVerified]);
 
     useEffect(() => {
         getData().then(res => setObjec(res));

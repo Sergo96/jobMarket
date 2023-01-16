@@ -7,3 +7,4 @@ export * from './GetLocationScreen';
 export * from './CreatePassword';
 export * from './AddBirthDateScreen';
 export * from './NicknameScreen';
+export * from './EmailVerification';

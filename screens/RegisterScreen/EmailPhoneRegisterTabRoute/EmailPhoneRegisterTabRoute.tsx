@@ -13,7 +13,9 @@ import { TermsAgreeText } from './styles';
 import { useRegisterContext } from '../../../context';
 import firebase from 'firebase/compat';
 import { validateEmail } from '../../../helpers';
+import axios from 'axios';
 import { tNoop } from '../../../types';
+import { useDebounce } from '../../../hooks';
 
 interface IProps {
     onEmailSendHandler: () => void;
@@ -23,9 +25,25 @@ export const EmailPhoneRegisterTabRoute: FC<IProps> = ({ onEmailSendHandler }) =
     const phoneInput = useRef<PhoneInput | null>(null);
     const { registerData, setRegisterData } = useRegisterContext();
 
+    const { email } = registerData;
+
+    const debouncedEmail = useDebounce(email, 1500);
+
     const isDisabled = (isChecked: boolean, validEmail: boolean): boolean => {
         return !(isChecked && validEmail);
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const params = { email: debouncedEmail, api_key: 'bddca19dbd154bda9c986e28ca7cf714' };
+
+            const res = await axios.get('https://api.zerobounce.net/v2/validate', { params });
+
+            console.log({ res });
+        };
+
+        fetchData();
+    }, [debouncedEmail]);
 
     return (
         <RegisterScreenWrapperStyled>
