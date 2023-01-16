@@ -2,12 +2,12 @@ import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { Pressable, Text, TouchableOpacity } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
-import { GetLocationContainer, LocationIconContainer } from './styles';
-import { MainButton, Wrapper, Divider, MainInput } from '../../components';
+import { GetLocationContainer } from './styles';
+import { MainButton, Wrapper, Divider, MainInput, RoundGrayContainer } from '../../components';
 import * as Location from 'expo-location';
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
 import { tCountry, useRegisterContext } from '../../context';
-import { useIsFirstRender, useUpdateEffect } from '../../hooks';
+import { useIsFirstRender } from '../../hooks';
 
 interface IProps extends RootStackScreenProps<'GetLocation'> {}
 
@@ -81,9 +81,9 @@ export const GetLocationScreen: FC<IProps> = ({ navigation }) => {
     return (
         <Wrapper>
             <GetLocationContainer>
-                <LocationIconContainer>
+                <RoundGrayContainer>
                     <Ionicons name={'md-location'} size={40} />
-                </LocationIconContainer>
+                </RoundGrayContainer>
                 <Divider />
                 <Text>Click on FLAG to add your Location</Text>
                 <Divider size={20} />

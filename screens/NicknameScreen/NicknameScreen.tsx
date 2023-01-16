@@ -51,10 +51,10 @@ export const NicknameScreen: FC<IProps> = ({ navigation }) => {
             .then((authUser: UserCredential) => {
                 updateProfile(authUser.user, {
                     displayName: fullName,
-                }).then(res => console.log({ res }));
+                }).then(res => res);
                 const token = authUser.user.getIdToken();
                 const obj = authUser.user.toJSON();
-                storeData(obj).then(r => console.log({ r }));
+                storeData(obj).then(r => r);
                 token.then(res => storeTokenData(res));
                 navigation.replace('Root');
             })

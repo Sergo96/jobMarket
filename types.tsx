@@ -25,6 +25,7 @@ export type RootStackParamList = {
     CreatePassword: undefined;
     AddBirthDateScreen: undefined;
     NicknameScreen: undefined;
+    EmailVerification: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
