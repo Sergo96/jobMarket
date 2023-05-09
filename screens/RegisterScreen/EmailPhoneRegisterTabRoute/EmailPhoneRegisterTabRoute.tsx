@@ -11,7 +11,7 @@ import {
 import PhoneInput from 'react-native-phone-number-input';
 import { TermsAgreeText } from './styles';
 import { useRegisterContext } from '../../../context';
-import firebase from 'firebase/compat';
+// import firebase from 'firebase/compat';
 import { validateEmail } from '../../../helpers';
 import axios from 'axios';
 import { tNoop } from '../../../types';

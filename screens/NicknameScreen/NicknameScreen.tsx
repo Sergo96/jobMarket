@@ -1,19 +1,28 @@
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useContext, useLayoutEffect, useState } from 'react';
 import { Divider, HeaderSection, MainButton, MainInput } from '../../components';
 import { KeyboardAvoidingView, Platform, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
-import { useRegisterContext } from '../../context';
-import { createUserWithEmailAndPassword, updateProfile, UserCredential } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { AuthContext, useRegisterContext } from '../../context';
+// import { createUserWithEmailAndPassword, updateProfile, UserCredential } from 'firebase/auth';
+// import { auth } from '../../firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { apiClient } from '../../api/apiClient';
+import { accessTokenManager } from '../../helpers';
 
 interface IProps extends RootStackScreenProps<'NicknameScreen'> {}
 
 export const NicknameScreen: FC<IProps> = ({ navigation }) => {
     const { registerData, setRegisterData } = useRegisterContext();
     const [loading, setLoading] = useState<boolean>(false);
-    const { nickname, email, passwordConfirmation, fullName } = registerData;
+    const { nickname, email, passwordConfirmation, fullName, birthDate } = registerData;
+    const token = accessTokenManager.getAccessToken();
+    const { userToken, signOut, signIn } = useContext(AuthContext);
+
+    console.log('token', token);
+
+    console.log('date', { birthDate });
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -28,38 +37,28 @@ export const NicknameScreen: FC<IProps> = ({ navigation }) => {
         });
     }, [navigation]);
 
-    const storeData = async (value: any) => {
+    const onRegisterPress = async () => {
         try {
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem('@storage_Key', jsonValue);
-        } catch (e) {
-            // saving error
-        }
-    };
+            console.log('click');
+            console.log({ nickname, email, passwordConfirmation });
+            console.log('env', process);
+            setLoading(true);
 
-    const storeTokenData = async (value: string) => {
-        try {
-            await AsyncStorage.setItem('@accessToken', value);
-        } catch (e) {
-            // saving error
-        }
-    };
+            const res = await apiClient.post(`/user/register`, {
+                username: nickname,
+                email: email,
+                password: passwordConfirmation,
+                birthdate: birthDate,
+            });
+            console.log('inner');
 
-    const onRegisterPress = () => {
-        setLoading(true);
-        createUserWithEmailAndPassword(auth, email, passwordConfirmation)
-            .then((authUser: UserCredential) => {
-                updateProfile(authUser.user, {
-                    displayName: fullName,
-                }).then(res => res);
-                const token = authUser.user.getIdToken();
-                const obj = authUser.user.toJSON();
-                storeData(obj).then(r => r);
-                token.then(res => storeTokenData(res));
-                navigation.replace('Root');
-            })
-            .catch(error => alert(error))
-            .finally(() => setLoading(false));
+            signIn(res.data.token);
+            console.log({ res });
+        } catch (err) {
+            console.log({ err });
+        } finally {
+            setLoading(false);
+        }
     };
     return (
         <SafeAreaView>

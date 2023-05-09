@@ -8,14 +8,16 @@ import Navigation from './navigation';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles';
 import { Text } from 'react-native';
-import { RegisterContext, tRegisterType, registerForm } from './context';
+import { RegisterContext, tRegisterType, registerForm, AuthProvider } from './context';
 import { useState } from 'react';
 import { useFonts } from 'expo-font';
+import { useAccessToken } from './hooks';
 
 export default function App() {
     const [registerData, setRegisterData] = useState<tRegisterType>(registerForm);
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
+
     const [loaded] = useFonts({
         InterLight: require('./assets/fonts/Inter-Light.ttf'),
         InterMedium: require('./assets/fonts/Inter-Medium.ttf'),
@@ -31,12 +33,14 @@ export default function App() {
     } else {
         return (
             <ThemeProvider theme={theme}>
-                <RegisterContext.Provider value={{ registerData, setRegisterData }}>
-                    <SafeAreaProvider>
-                        <Navigation colorScheme={colorScheme} />
-                        <StatusBar />
-                    </SafeAreaProvider>
-                </RegisterContext.Provider>
+                <AuthProvider>
+                    <RegisterContext.Provider value={{ registerData, setRegisterData }}>
+                        <SafeAreaProvider>
+                            <Navigation colorScheme={colorScheme} />
+                            <StatusBar />
+                        </SafeAreaProvider>
+                    </RegisterContext.Provider>
+                </AuthProvider>
             </ThemeProvider>
         );
     }
