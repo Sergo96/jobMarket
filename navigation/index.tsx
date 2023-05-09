@@ -29,6 +29,10 @@ import {
     EmailVerification,
 } from '../screens';
 import { RegisterScreen } from '../screens/RegisterScreen';
+import { useAccessToken } from '../hooks';
+import { accessTokenManager } from '../helpers';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../context';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
@@ -53,25 +57,40 @@ function RootNavigator() {
         headerTitleStyle: { color: 'black' },
         headerTintColor: 'white',
     };
+
+    const { userToken } = useContext(AuthContext);
+
+    // const token = accessTokenManager.getAccessToken();
+    console.log('navigation', userToken);
+
     return (
         <Stack.Navigator initialRouteName={'Login'} screenOptions={globalScreenOptions}>
-            <Stack.Screen
-                name="Root"
-                component={BottomTabNavigator}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-            <Stack.Screen name="GetLocation" component={GetLocationScreen} />
-            <Stack.Screen name="LoginViaEmail" component={LoginViaEmail} />
-            <Stack.Screen name="CreatePassword" component={CreatePassword} />
-            <Stack.Screen name="AddBirthDateScreen" component={AddBirthDateScreen} />
-            <Stack.Screen name="EmailVerification" component={EmailVerification} />
-            <Stack.Screen name="NicknameScreen" component={NicknameScreen} />
-            <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                <Stack.Screen name="Modal" component={ModalScreen} />
-            </Stack.Group>
+            {userToken ? (
+                <Stack.Screen
+                    name="Root"
+                    component={BottomTabNavigator}
+                    options={{ headerShown: false }}
+                />
+            ) : (
+                <>
+                    <Stack.Screen
+                        name="NotFound"
+                        component={NotFoundScreen}
+                        options={{ title: 'Oops!' }}
+                    />
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                    <Stack.Screen name="GetLocation" component={GetLocationScreen} />
+                    <Stack.Screen name="LoginViaEmail" component={LoginViaEmail} />
+                    <Stack.Screen name="CreatePassword" component={CreatePassword} />
+                    <Stack.Screen name="AddBirthDateScreen" component={AddBirthDateScreen} />
+                    <Stack.Screen name="EmailVerification" component={EmailVerification} />
+                    <Stack.Screen name="NicknameScreen" component={NicknameScreen} />
+                    <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                        <Stack.Screen name="Modal" component={ModalScreen} />
+                    </Stack.Group>
+                </>
+            )}
         </Stack.Navigator>
     );
 }

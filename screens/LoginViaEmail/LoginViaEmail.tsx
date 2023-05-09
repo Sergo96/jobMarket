@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
     Keyboard,
     KeyboardAvoidingView,
@@ -19,8 +19,9 @@ import {
     RegisterFooter,
     HeaderSection,
 } from '../../components';
-import { auth } from '../../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { apiClient } from '../../api/apiClient';
+import { AuthContext } from '../../context';
+import { tError } from '../../interfaces';
 
 interface IProps extends RootStackScreenProps<'LoginViaEmail'> {}
 
@@ -29,6 +30,7 @@ export const LoginViaEmail: FC<IProps> = ({ navigation }) => {
     const [password, setPassword] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const { userToken, signOut, signIn } = useContext(AuthContext);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -47,22 +49,23 @@ export const LoginViaEmail: FC<IProps> = ({ navigation }) => {
         navigation.navigate('GetLocation');
     };
 
-    const signIn = () => {
+    const signInHanlder = async () => {
         setLoading(true);
-        const correctEmail = email.current.trim();
-        signInWithEmailAndPassword(auth, correctEmail, password)
-            .then(userCredential => {
-                // Signed in
-                const user = userCredential.user;
-                // ...
-                setLoading(false);
-            })
-            .catch(error => {
-                const errorCode = error.code;
-                const errorMessage: string = error.message;
-                setErrorMessage('Wrong Email or Password');
-            })
-            .finally(() => setLoading(false));
+        try {
+            const correctEmail = email.current.trim();
+            console.log({ correctEmail });
+
+            const res = await apiClient.post(`/user/login`, {
+                username: correctEmail,
+                password,
+            });
+            signIn(res.data.token);
+        } catch (err) {
+            const { data } = err as tError;
+            setErrorMessage(data);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -91,7 +94,7 @@ export const LoginViaEmail: FC<IProps> = ({ navigation }) => {
                         <Divider size={25} />
                         <Text style={{ color: 'red' }}>{errorMessage}</Text>
                         <Divider size={25} />
-                        <MainButton loading={loading} disabled={loading} onPress={signIn}>
+                        <MainButton loading={loading} disabled={loading} onPress={signInHanlder}>
                             Sign In
                         </MainButton>
                         <Divider size={25} />

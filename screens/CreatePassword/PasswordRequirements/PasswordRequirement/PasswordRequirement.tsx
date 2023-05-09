@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Typography } from '../../../../components';
 import { PasswordRequirementStyled } from './styles';
-import firebase from 'firebase/compat';
+// import firebase from 'firebase/compat';
 
 interface IProps {
     fulfilled: boolean;

@@ -4,7 +4,7 @@ import { signInViaButtons } from './data';
 import { RootStackScreenProps } from '../../types';
 import { Text, View } from 'react-native';
 import { FooterBoldText, FooterRegisterStyled, FooterStyled, LoginScreenContainer } from './styles';
-import { auth } from '../../firebase';
+// import { auth } from '../../firebase';
 
 interface IProps extends RootStackScreenProps<'Login'> {}
 
@@ -17,14 +17,6 @@ export const LoginScreen: FC<IProps> = ({ navigation }) => {
     const onRegisterPress = () => {
         navigation.navigate('GetLocation');
     };
-
-    useEffect(() => {
-        return auth.onAuthStateChanged(authUser => {
-            if (authUser) {
-                navigation.replace('Root');
-            }
-        });
-    }, []);
 
     useLayoutEffect(() => {
         navigation.setOptions({

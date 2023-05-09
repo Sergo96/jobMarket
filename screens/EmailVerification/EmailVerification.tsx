@@ -3,14 +3,14 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { AntDesign, Octicons } from '@expo/vector-icons';
 import { RootStackScreenProps } from '../../types';
 import { HeaderSection, Wrapper, Divider, RoundGrayContainer, Typography } from '../../components';
-import { auth } from '../../firebase';
-import { sendEmailVerification } from 'firebase/auth';
+// import { auth } from '../../firebase';
+// import { sendEmailVerification } from 'firebase/auth';
 import { ResendCounter } from './ResendCounter';
 
 interface IProps extends RootStackScreenProps<'EmailVerification'> {}
 
 export const EmailVerification: FC<IProps> = ({ navigation, route }) => {
-    let user = auth.currentUser;
+    // let user = auth.currentUser;
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -20,15 +20,15 @@ export const EmailVerification: FC<IProps> = ({ navigation, route }) => {
         });
     }, [navigation]);
 
-    useEffect(() => {
-        if (auth.currentUser) {
-            sendEmailVerification(auth.currentUser).then(res => {
-                // Email verification sent!
-                // ...
-                console.log(res);
-            });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (auth.currentUser) {
+    //         sendEmailVerification(auth.currentUser).then(res => {
+    //             // Email verification sent!
+    //             // ...
+    //             console.log(res);
+    //         });
+    //     }
+    // }, []);
 
     // useEffect(() => {
     //     if (user?.emailVerified !== null) {
@@ -40,13 +40,13 @@ export const EmailVerification: FC<IProps> = ({ navigation, route }) => {
     // }, [user?.emailVerified]);
 
     const resendVerificationHandler = () => {
-        if (auth.currentUser) {
-            sendEmailVerification(auth.currentUser).then(res => {
-                // Email verification sent!
-                // ...
-                console.log(res);
-            });
-        }
+        // if (auth.currentUser) {
+        //     sendEmailVerification(auth.currentUser).then(res => {
+        //         // Email verification sent!
+        //         // ...
+        //         console.log(res);
+        //     });
+        // }
     };
 
     return (

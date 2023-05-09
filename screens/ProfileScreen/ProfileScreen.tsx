@@ -1,53 +1,22 @@
 import { MainButton, Wrapper } from '../../components';
 
 import { RootTabScreenProps } from '../../types';
-import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useContext, useState } from 'react';
 import { Text } from 'react-native';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { useAccessToken } from '../../hooks';
+import { AuthContext } from '../../context';
 
-const getData = async () => {
-    try {
-        const value = await AsyncStorage.getItem('@accessToken');
-        const obj = await AsyncStorage.getItem('@storage_Key');
-        if (value !== null) {
-            // value previously stored
-            return obj;
-        }
-    } catch (e) {
-        // error reading value
-    }
-};
 export function ProfileScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-    const [token, setToken] = useState<string>('');
     const [objec, setObjec] = useState<any>();
+    const token = useAccessToken();
+    const { userToken, signOut, signIn } = useContext(AuthContext);
 
-    let user = auth.currentUser;
-    console.log({ user });
+    console.log({ userToken });
 
     const signOutUser = () => {
-        signOut(auth)
-            .then(out => {
-                // Sign-out successful.
-                navigation.replace('Login');
-            })
-            .catch(error => {
-                // An error happened.
-            });
+        signOut();
     };
 
-    // useEffect(() => {
-    //     if (user?.emailVerified !== null) {
-    //         if (user?.emailVerified === false) {
-    //             navigation.replace('EmailVerification');
-    //         }
-    //     }
-    // }, [user?.emailVerified]);
-
-    useEffect(() => {
-        getData().then(res => setObjec(res));
-    }, []);
     return (
         <Wrapper>
             <Text>token: {objec}</Text>

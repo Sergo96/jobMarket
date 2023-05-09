@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 
 import { EmailPhoneRegisterTabRoute } from './EmailPhoneRegisterTabRoute';
-import { auth } from '../../firebase';
+// import { auth } from '../../firebase';
 interface IProps extends RootStackScreenProps<'RegisterScreen'> {}
 
 export const RegisterScreen: FC<IProps> = ({ navigation }) => {
@@ -22,11 +22,11 @@ export const RegisterScreen: FC<IProps> = ({ navigation }) => {
     }, [navigation]);
 
     useEffect(() => {
-        return auth.onAuthStateChanged(authUser => {
-            if (authUser) {
-                navigation.replace('Root');
-            }
-        });
+        // return auth.onAuthStateChanged(authUser => {
+        //     if (authUser) {
+        //         navigation.replace('Root');
+        //     }
+        // });
     }, []);
 
     const onEmailSendHandler = () => {
