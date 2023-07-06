@@ -7,8 +7,8 @@ export const StyledMainInput = styled(TextInput)<{ isError?: boolean }>`
     border-radius: 8px;
     height: 48px;
     width: 100%;
-    font-size: 14px;
-    color: ${({ theme: { elements } }) => elements.TEXT_PRIMARY};
+    font-size: 17px;
+    color: ${({ theme: { elements } }) => elements.WHITE_PRIMARY};
     background: ${({ theme: { elements } }) => elements.INPUTS_DEFAULT_COLOR};
     border: 1px solid
         ${({ theme: { elements }, isError }) => {

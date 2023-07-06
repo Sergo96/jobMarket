@@ -10,12 +10,11 @@ interface IProps extends RootStackScreenProps<'Login'> {}
 
 export const LoginScreen: FC<IProps> = ({ navigation }) => {
     const onLoginButtonPress = (title: string) => {
-        console.log('click');
         if (title === 'LoginViaEmail') navigation.navigate('LoginViaEmail');
     };
 
     const onRegisterPress = () => {
-        navigation.navigate('GetLocation');
+        navigation.navigate('RegisterScreen');
     };
 
     useLayoutEffect(() => {
@@ -23,12 +22,13 @@ export const LoginScreen: FC<IProps> = ({ navigation }) => {
             headerTitleAlign: 'center',
         });
     }, [navigation]);
+
     return (
         <View style={{ height: '100%' }}>
             <LoginScreenContainer>
                 {signInViaButtons.map(({ icon, title, route }, index) => (
                     <LoginViaBtn
-                        key={title}
+                        key={title + index}
                         onPress={() => onLoginButtonPress(route)}
                         Icon={icon}
                         title={''}
@@ -38,7 +38,6 @@ export const LoginScreen: FC<IProps> = ({ navigation }) => {
                 ))}
             </LoginScreenContainer>
             <RegisterFooter onRegisterPress={onRegisterPress} />
-            <Divider />
         </View>
     );
 };

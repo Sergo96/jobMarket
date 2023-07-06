@@ -1,37 +1,33 @@
-import { FC, useEffect, useLayoutEffect } from 'react';
+import React, { FC, useLayoutEffect } from 'react';
 import { RootStackScreenProps } from '../../types';
-import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import { Divider, MainButton, MainContainerStyled, MainInput } from '../../components';
+import { NavbarOptions } from '../../classes';
+import { PasswordSection } from './PasswordSection/PasswordSection';
 
-import { EmailPhoneRegisterTabRoute } from './EmailPhoneRegisterTabRoute';
-// import { auth } from '../../firebase';
 interface IProps extends RootStackScreenProps<'RegisterScreen'> {}
 
 export const RegisterScreen: FC<IProps> = ({ navigation }) => {
+    const options = new NavbarOptions('Registration', true, 'center');
+
     useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'Registration',
-            headerBackTitleVisible: false,
-            headerTitleAlign: 'center',
-            headerLeft: () => (
-                <TouchableOpacity style={{ marginLeft: 10 }} onPress={navigation.goBack}>
-                    <AntDesign name={'arrowleft'} size={24} color={'black'} />
-                </TouchableOpacity>
-            ),
-        });
+        navigation.setOptions(options);
     }, [navigation]);
 
-    useEffect(() => {
-        // return auth.onAuthStateChanged(authUser => {
-        //     if (authUser) {
-        //         navigation.replace('Root');
-        //     }
-        // });
-    }, []);
-
-    const onEmailSendHandler = () => {
-        navigation.navigate('CreatePassword');
+    const onRegisterPress = () => {
+        navigation.replace('Root');
     };
 
-    return <EmailPhoneRegisterTabRoute onEmailSendHandler={onEmailSendHandler} />;
+    return (
+        <MainContainerStyled>
+            <MainInput placeholder="Full Name" />
+            <Divider size={20} />
+            <MainInput placeholder="Email" />
+            <Divider />
+            <PasswordSection />
+            <Divider />
+            <MainInput placeholder="Your Skills" />
+            <Divider />
+            <MainButton onPress={onRegisterPress}>Register</MainButton>
+        </MainContainerStyled>
+    );
 };

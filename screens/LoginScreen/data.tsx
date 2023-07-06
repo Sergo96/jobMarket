@@ -12,16 +12,6 @@ export const signInViaButtons = [
         route: '',
     },
     {
-        title: 'Continue via Facebook',
-        icon: (
-            <Image
-                source={require('../../assets/images/facebook.png')}
-                style={{ width: 24, height: 24 }}
-            />
-        ),
-        route: '',
-    },
-    {
         title: 'Sign In via Email or Phone',
         icon: (
             <Image

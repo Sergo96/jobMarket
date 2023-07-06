@@ -14,7 +14,7 @@ export const LoginViaStyled = styled(TouchableOpacity)`
     transition: all 0.3s ease;
     width: 100%;
     background-color: ${({ theme: { elements } }) => {
-        return elements.WHITE_PRIMARY;
+        return elements.BUTTON_PRIMARY_BACKGROUND;
     }};
     margin-bottom: 12px;
 `;
@@ -26,4 +26,8 @@ export const LoginViaText = styled(View)`
     justify-content: center;
     font-size: 14px;
     font-weight: 500;
+`;
+
+export const LoginButtonText = styled(Text)`
+    color: green;
 `;

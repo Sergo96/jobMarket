@@ -32,7 +32,7 @@ export const TitleLevelTwo = styled(Text)<{
         return size === 'large' ? '40px' : '18px';
     }};
     color: ${({ color, theme: { elements } }) => {
-        return color === 'white' ? elements.WHITE_PRIMARY : elements.TEXT_PRIMARY;
+        return color ?? elements.WHITE_PRIMARY;
     }};
     text-align: ${({ align }) => {
         return align ? align : 'left';
@@ -60,7 +60,7 @@ export const TitleLevelFour = styled(Text)<{
     font-size: 16px;
     line-height: 15px;
     color: ${({ color, theme: { elements } }) => {
-        return color === 'grey' ? elements.TEXT_DARK_GRAY : elements.TEXT_PRIMARY;
+        return color ? color : elements.TEXT_PRIMARY;
     }};
     span {
         display: inline-flex;
@@ -77,12 +77,13 @@ export const Paragraph = styled(Text)<{
     size?: tSize;
     color?: string;
 }>`
+    font-family: InterMedium;
     font-weight: 400;
     font-size: ${({ size }) => {
         return size === 'small' ? '13px' : '14px';
     }};
     color: ${({ color, theme: { elements } }) => {
-        return color ? color : elements.TEXT_DARK_GRAY;
+        return color ? color : elements.TEXT_GRAY;
     }};
     text-align: ${({ align }) => {
         return align ? align : 'left';

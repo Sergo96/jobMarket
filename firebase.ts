@@ -1,26 +1,39 @@
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from 'firebase/app';
-// import { getAnalytics } from 'firebase/analytics';
-// import { getAuth } from 'firebase/auth';
+// class Observable {
+//     constructor() {
+//         this.observers = [];
+//     }
 
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
+//     subscribe(func) {
+//         this.observers.push(func);
+//     }
 
-// // Your web app's Firebase configuration
-// // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//     apiKey: 'AIzaSyBTZ_yuxAxFf7DjJdY6pYJLY2HqFaM6ufc',
-//     authDomain: 'awesome-7f65d.firebaseapp.com',
-//     projectId: 'awesome-7f65d',
-//     storageBucket: 'awesome-7f65d.appspot.com',
-//     messagingSenderId: '914331940207',
-//     appId: '1:914331940207:web:84f76521db8acd4f02649a',
-//     measurementId: 'G-P5VJ2TVXS8',
-// };
+//     unsubscribe(func) {
+//         this.observers = this.observers.filter(observer => observer !== func);
+//     }
 
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// const auth = getAuth();
+//     notify(data) {
+//         this.observers.forEach(observer => observer(data));
+//     }
+// }
 
-// export { auth, app };
+// const observer = new Observable();
+
+// function search(nums: number[], target: number): number {
+//     const len = nums.length;
+//     let end = len - 1;
+//     let start = 0;
+
+//     while (start <= end) {
+//         const mid = Math.floor((start + end) / 2);
+
+//         if (nums[mid] === target) return mid;
+
+//         if (target < nums[mid]) {
+//             end = mid - 1;
+//         } else {
+//             start = mid + 1;
+//         }
+//     }
+
+//     return -1;
+// }

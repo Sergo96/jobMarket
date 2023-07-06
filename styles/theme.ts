@@ -4,6 +4,7 @@ export const colors = Object.freeze({
     blue2: '#00B3FF',
     blue3: '#2E86F9',
     blue4: '#4A6DF5',
+    blueDisc: '#7289da',
 
     blackLight: '#333333',
 
@@ -82,6 +83,11 @@ export const colors = Object.freeze({
     green10: '#092b00',
     green11: '#52C41A',
     green12: '#3FA368',
+
+    blackBack: '#161a23',
+    darBtnBack: '#404249',
+    inputBck: '#383a41',
+    inputPlaceholder: '#60626b',
 });
 
 export const elements = Object.freeze({
@@ -100,8 +106,10 @@ export const elements = Object.freeze({
     BORDER_GREY: colors.gray4,
     BORDER_INACTIVE_GRAY: colors.gray6,
     BACKGROUND_GREY: colors.gray17,
+    PRIMARY_BACKGROUND: colors.blackBack,
 
     BUTTON_PRIMARY: colors.gray10,
+    BUTTON_PRIMARY_BACKGROUND: colors.darBtnBack,
     BUTTON_DISABLE: colors.gray88,
     BUTTON_PRIMARY_HOVER: colors.orange7,
     BUTTON_ADD_HOVER: colors.orange12,
@@ -114,7 +122,8 @@ export const elements = Object.freeze({
     SIMPLE_BLACK: colors.gray10,
     INFO: colors.blue4,
 
-    INPUTS_DEFAULT_COLOR: colors.gray13,
+    INPUTS_DEFAULT_COLOR: colors.inputBck,
+    INPUT_PLACEHOLDER_COLOR: colors.inputPlaceholder,
     INPUTS_DEFAULT_BORDER: colors.gray14,
     INPUT_FOCUS_BORDER: colors.gray16,
 
@@ -127,6 +136,8 @@ export const elements = Object.freeze({
     LOADER_SPINNER_ORANGE: colors.orange12,
     LOADER_SPINNER_RED: colors.red13,
     LOADER_SPINNER_GREEN: colors.green12,
+
+    HEADER_BACKGROUND: colors.blueDisc,
 });
 
 type StyleTheme = {

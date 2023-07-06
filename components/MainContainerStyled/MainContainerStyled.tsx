@@ -3,8 +3,10 @@ import { View } from 'react-native';
 import styled from 'styled-components';
 
 const StyledMainContainer = styled(View)`
+    flex: 1;
     padding: 30px;
-    color: ${({ theme: { elements } }) => elements.TEXT_GRAY};
+    background-color: ${({ theme: { elements } }) => elements.PRIMARY_BACKGROUND};
+    height: 100%;
 `;
 
 interface iProps {

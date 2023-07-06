@@ -1,26 +1,41 @@
-import { MainButton, Wrapper } from '../../components';
-
+import { Divider, MainButton, Typography, Wrapper } from '../../components';
 import { RootTabScreenProps } from '../../types';
-import { useContext, useState } from 'react';
-import { Text } from 'react-native';
-import { useAccessToken } from '../../hooks';
+import { useContext, useLayoutEffect } from 'react';
 import { AuthContext } from '../../context';
+import { NavbarOptions } from '../../classes';
+import { DetailsContainer, ProfileImage, ProfileInnerContainer } from './styles';
 
 export function ProfileScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-    const [objec, setObjec] = useState<any>();
-    const token = useAccessToken();
     const { userToken, signOut, signIn } = useContext(AuthContext);
+    const profileOptions = new NavbarOptions('Profile', true, 'center');
 
-    console.log({ userToken });
+    useLayoutEffect(() => {
+        navigation.setOptions(profileOptions);
+    }, []);
 
     const signOutUser = () => {
-        signOut();
+        navigation.navigate('Login');
     };
 
     return (
         <Wrapper>
-            <Text>token: {objec}</Text>
-            <MainButton onPress={signOutUser}>Click</MainButton>
+            <ProfileInnerContainer>
+                <ProfileImage source={require('./profileFoto.jpeg')} />
+                <DetailsContainer>
+                    <Typography textType={'h1'} children={'John Doe'} />
+                    <Divider size={15} />
+                    <Typography
+                        textType={'h4'}
+                        children={'Software Engineer | React Native Developer'}
+                    />
+                    <Divider size={10} />
+                    <Typography textType={'h3'} children={'San Francisco'} />
+                </DetailsContainer>
+                <Divider size={10} />
+                <MainButton onPress={signOutUser}>Click</MainButton>
+                <Divider size={10} />
+                <MainButton onPress={signOutUser}>Edit</MainButton>
+            </ProfileInnerContainer>
         </Wrapper>
     );
 }
