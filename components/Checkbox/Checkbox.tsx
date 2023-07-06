@@ -1,5 +1,5 @@
 import { Pressable } from 'react-native';
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CheckboxContainer, CheckboxTitleContainer } from './styles';
 

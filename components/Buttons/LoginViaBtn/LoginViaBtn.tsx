@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { ButtonProps, Text, View } from 'react-native';
-import { LoginViaStyled, LoginViaText } from './styles';
+import { LoginViaStyled, LoginViaText, LoginButtonText } from './styles';
+import { Typography } from '../../Typography';
 
 interface IProps extends ButtonProps {
     children: string;
@@ -12,7 +13,7 @@ export const LoginViaBtn: FC<IProps> = ({ children, Icon, ...props }) => {
         <LoginViaStyled {...props}>
             {Icon}
             <LoginViaText>
-                <Text>{children}</Text>
+                <Typography textType={'p'} children={children} />
             </LoginViaText>
         </LoginViaStyled>
     );

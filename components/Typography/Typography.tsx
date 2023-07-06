@@ -7,11 +7,11 @@ import {
     Caption,
     Paragraph,
 } from './styles';
-import { StyledComponent } from 'styled-components';
 import { tColor, tSize, tTextType, tTypographyType } from './types';
-import { propsHandler } from './propsHandler';
+import { tNoop } from '../../interfaces';
+import { TextProps } from 'react-native';
 
-interface IProps {
+interface IProps extends TextProps {
     textType: tTypographyType;
     children: string | ReactNode;
     align?: string;
@@ -19,6 +19,7 @@ interface IProps {
     weight?: number;
     color?: tColor;
     type?: tTextType;
+    onPress?: tNoop;
 }
 
 type tObjRendering = {

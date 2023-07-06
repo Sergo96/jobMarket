@@ -1,1 +1,0 @@
-export { AddBirthDateScreen } from './AddBirthDateScreen';

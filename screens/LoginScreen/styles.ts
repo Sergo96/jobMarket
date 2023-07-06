@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 export const LoginScreenContainer = styled(View)`
     padding: 30px;
-    background-color: ${({ theme: { elements } }) => elements.WHITE_PRIMARY};
+    background-color: ${({ theme: { elements } }) => elements.PRIMARY_BACKGROUND};
     flex: 1;
 `;
 

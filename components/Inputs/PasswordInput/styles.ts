@@ -24,5 +24,6 @@ export const InnerInput = styled(TextInput)`
     background-color: transparent;
     height: 100%;
     width: 80%;
-    font-size: 14px;
+    font-size: 17px;
+    color: ${({ theme: { elements } }) => elements.WHITE_PRIMARY};
 `;

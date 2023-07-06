@@ -1,14 +1,9 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, View } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -21,18 +16,14 @@ import {
     ProfileScreen,
     ChatScreen,
     LoginScreen,
-    GetLocationScreen,
-    CreatePassword,
-    AddBirthDateScreen,
-    NicknameScreen,
-    LoginViaEmail,
-    EmailVerification,
+    RegisterScreen,
+    Messages,
 } from '../screens';
-import { RegisterScreen } from '../screens/RegisterScreen';
 import { useAccessToken } from '../hooks';
 import { accessTokenManager } from '../helpers';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context';
+import { elements } from '../styles';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
@@ -45,70 +36,53 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     const globalScreenOptions = {
-        headerStyle: { backgroundColor: 'white', borderBottom: '2px solid' },
-        headerTitleStyle: { color: 'black' },
+        headerStyle: { backgroundColor: elements.HEADER_BACKGROUND },
+        headerTitleStyle: { color: elements.WHITE_PRIMARY },
         headerTintColor: 'white',
     };
 
     const { userToken } = useContext(AuthContext);
 
-    // const token = accessTokenManager.getAccessToken();
-    console.log('navigation', userToken);
-
     return (
         <Stack.Navigator initialRouteName={'Login'} screenOptions={globalScreenOptions}>
-            {userToken ? (
-                <Stack.Screen
-                    name="Root"
-                    component={BottomTabNavigator}
-                    options={{ headerShown: false }}
-                />
-            ) : (
-                <>
-                    <Stack.Screen
-                        name="NotFound"
-                        component={NotFoundScreen}
-                        options={{ title: 'Oops!' }}
-                    />
-                    <Stack.Screen name="Login" component={LoginScreen} />
-                    <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-                    <Stack.Screen name="GetLocation" component={GetLocationScreen} />
-                    <Stack.Screen name="LoginViaEmail" component={LoginViaEmail} />
-                    <Stack.Screen name="CreatePassword" component={CreatePassword} />
-                    <Stack.Screen name="AddBirthDateScreen" component={AddBirthDateScreen} />
-                    <Stack.Screen name="EmailVerification" component={EmailVerification} />
-                    <Stack.Screen name="NicknameScreen" component={NicknameScreen} />
-                    <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                        <Stack.Screen name="Modal" component={ModalScreen} />
-                    </Stack.Group>
-                </>
-            )}
+            <Stack.Screen
+                name="Root"
+                component={BottomTabNavigator}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+            <Stack.Screen name="Messages" component={Messages} />
+
+            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen name="Modal" component={ModalScreen} />
+            </Stack.Group>
         </Stack.Navigator>
     );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
     const colorScheme = useColorScheme();
+
+    const globalScreenOptions = {
+        headerStyle: { backgroundColor: elements.HEADER_BACKGROUND },
+        headerTitleStyle: { color: elements.WHITE_PRIMARY },
+        headerTintColor: 'white',
+    };
 
     return (
         <BottomTab.Navigator
             initialRouteName="TabOne"
             screenOptions={{
                 tabBarActiveTintColor: Colors[colorScheme].tint,
+                ...globalScreenOptions,
             }}
         >
             <BottomTab.Screen

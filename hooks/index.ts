@@ -6,3 +6,4 @@ export * from './useBoolean';
 export * from './useCounter';
 export * from './useDebounce';
 export * from './useAccessToken';
+export * from './useThrottle';

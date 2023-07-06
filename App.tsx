@@ -7,11 +7,10 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { RegisterContext, tRegisterType, registerForm, AuthProvider } from './context';
 import { useState } from 'react';
 import { useFonts } from 'expo-font';
-import { useAccessToken } from './hooks';
 
 export default function App() {
     const [registerData, setRegisterData] = useState<tRegisterType>(registerForm);
